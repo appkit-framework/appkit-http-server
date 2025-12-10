@@ -121,11 +121,21 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
         try {
             switch($routeInfo[0]) {
                 case Dispatcher::NOT_FOUND:
-                    $this -> log -> debug("$method $path: Route not found");
+                    $this -> logRequest(
+                        $method,
+                        $path,
+                        404,
+                        reason: 'Route not found'
+                    );
                     throw new HttpError(404);
 
                 case Dispatcher::METHOD_NOT_ALLOWED:
-                    $this -> log -> debug("$method $path: Method not allowed");
+                    $this -> logRequest(
+                        $method,
+                        $path,
+                        405,
+                        reason: 'Method not allowed'
+                    );
                     throw new HttpError(405);
 
                 case Dispatcher::FOUND:
@@ -134,20 +144,37 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
                         'handleRequest'
                     ];
                     $serviceName = get_class($serviceHandler[0]);
-                    $this -> log -> debug("$method $path: Request dispatched to $serviceName");
+
                     try {
-                        return $serviceHandler(
+                        $response = $serviceHandler(
                             $request,
                             $routeInfo[1]['handler'],
                             $routeInfo[2],
                             $routeInfo[1]['extraParameters']
                         );
+                        $this -> logRequest(
+                            $method,
+                            $path,
+                            $response -> getStatusCode(),
+                            $serviceName
+                        );
+                        return $response;
                     } catch(HttpError $e) {
+                        $this -> logRequest(
+                            $method,
+                            $path,
+                            $e -> getCode(),
+                            $serviceName,
+                            $e -> getMessage()
+                        );
                         throw $e;
                     } catch(Throwable $e) {
-                        $this -> log -> error(
-                            "$method $path: Uncaught exception while handling the request by $serviceName",
-                            $e
+                        $this -> logRequest(
+                            $method,
+                            $path,
+                            500,
+                            reason: "Uncaught exception from $serviceName",
+                            exception: $e
                         );
                         throw new HttpError(500);
                     }
@@ -159,5 +186,19 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
                 $e -> getMessage() . "\n"
             );
         }
+    }
+
+    private function logRequest($method, $path, $status, $serviceName = null, $reason = null, $exception = null) {
+        $origin = $serviceName ?? 'server';
+
+        $message = "$method $path => $status @$origin";
+
+        if($reason)
+            $message .= ": $reason";
+
+        if($exception)
+            $this -> log -> error($message, $exception);
+        else
+            $this -> log -> debug($message);
     }
 }
