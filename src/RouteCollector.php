@@ -8,7 +8,7 @@ class RouteCollector extends FastRouteRouteCollector {
     private $currentService;
     private $currentServicePrefix = '';
 
-    public function addRoute($httpMethod, $route, $handler) {
+    public function addRoute($httpMethod, $route, $handler, $extraParameters = []) {
         // TODO: Stop injecting extraParameters into the handler once a new FastRoute starts supporting them
         parent::addRoute(
             $httpMethod,
@@ -18,7 +18,7 @@ class RouteCollector extends FastRouteRouteCollector {
                 'extraParameters' => [
                     '_service' => $this -> currentService,
                     '_servicePrefix' => $this -> currentServicePrefix
-                ]
+                ] + $extraParameters
             ]
         );
     }
