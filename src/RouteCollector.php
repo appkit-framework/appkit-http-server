@@ -7,7 +7,7 @@ use FastRoute\RouteCollector as FastRouteRouteCollector;
 class RouteCollector extends FastRouteRouteCollector {
     private $currentService;
 
-    public function addRoute($httpMethod, $route, $handler, $extraParameters = []) {
+    public function addRoute($httpMethod, $route, $handler = null, $extraParameters = []) {
         // TODO: Stop injecting extraParameters into the handler once a new FastRoute starts supporting them
         $extraParameters['_service'] = $this -> currentService;
         parent::addRoute(
@@ -25,27 +25,27 @@ class RouteCollector extends FastRouteRouteCollector {
         $this -> addGroup($prefix, [$service, 'setupRoutes']);
     }
 
-    public function get($route, $handler, $extraParameters = []) {
+    public function get($route, $handler = null, $extraParameters = []) {
         $this -> addRoute('GET', $route, $handler, $extraParameters);
     }
 
-    public function post($route, $handler, $extraParameters = []) {
+    public function post($route, $handler = null, $extraParameters = []) {
         $this -> addRoute('POST', $route, $handler, $extraParameters);
     }
 
-    public function put($route, $handler, $extraParameters = []) {
+    public function put($route, $handler = null, $extraParameters = []) {
         $this -> addRoute('PUT', $route, $handler, $extraParameters);
     }
 
-    public function delete($route, $handler, $extraParameters = []) {
+    public function delete($route, $handler = null, $extraParameters = []) {
         $this -> addRoute('DELETE', $route, $handler, $extraParameters);
     }
 
-    public function patch($route, $handler, $extraParameters = []) {
+    public function patch($route, $handler = null, $extraParameters = []) {
         $this -> addRoute('PATCH', $route, $handler, $extraParameters);
     }
 
-    public function head($route, $handler, $extraParameters = []) {
+    public function head($route, $handler = null, $extraParameters = []) {
         $this -> addRoute('HEAD', $route, $handler, $extraParameters);
     }
 }
