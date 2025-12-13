@@ -24,4 +24,28 @@ class RouteCollector extends FastRouteRouteCollector {
         $this -> currentService = $service;
         $this -> addGroup($prefix, [$service, 'setupRoutes']);
     }
+
+    public function get($route, $handler, $extraParameters = []) {
+        $this -> addRoute('GET', $route, $handler, $extraParameters);
+    }
+
+    public function post($route, $handler, $extraParameters = []) {
+        $this -> addRoute('POST', $route, $handler, $extraParameters);
+    }
+
+    public function put($route, $handler, $extraParameters = []) {
+        $this -> addRoute('PUT', $route, $handler, $extraParameters);
+    }
+
+    public function delete($route, $handler, $extraParameters = []) {
+        $this -> addRoute('DELETE', $route, $handler, $extraParameters);
+    }
+
+    public function patch($route, $handler, $extraParameters = []) {
+        $this -> addRoute('PATCH', $route, $handler, $extraParameters);
+    }
+
+    public function head($route, $handler, $extraParameters = []) {
+        $this -> addRoute('HEAD', $route, $handler, $extraParameters);
+    }
 }
