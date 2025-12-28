@@ -1,0 +1,23 @@
+{
+    "name": "appkit/http-server",
+    "type": "library",
+    "description": "HTTP server for the AppKit framework",
+    "license": "MIT",
+    "require": {
+        "appkit/health": "^1.0",
+        "appkit/http": "^1.0",
+        "appkit/start-stop": "^1.0",
+        "react/async": "^4.3",
+        "react/http": "^1.11",
+        "react/socket": "^1.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "AppKit\\Http\\Server\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
