@@ -4,7 +4,6 @@ namespace AppKit\Http\Server;
 
 use AppKit\Http\Server\HttpServerException;
 use AppKit\Http\Server\Middleware\Internal\AccessLogMiddleware;
-use AppKit\Http\Server\Middleware\Internal\TrailingSlashMiddleware;
 use AppKit\Http\Server\Middleware\Internal\ErrorHandlerMiddleware;
 use AppKit\Http\Server\Middleware\Internal\RedirectMiddleware;
 use AppKit\Http\Server\Middleware\Internal\ExceptionMiddleware;
@@ -39,8 +38,6 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
         $this -> pipeline
             -> addMiddleware(
                 new AccessLogMiddleware($this -> log)
-            ) -> addMiddleware(
-                new TrailingSlashMiddleware()
             ) -> addMiddleware(
                 new ErrorHandlerMiddleware(
                     new PlainTextErrorHandler()
