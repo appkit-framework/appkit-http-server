@@ -33,7 +33,7 @@ abstract class AbstractHttpResource {
         return $this -> pipeline -> processRequest($request);
     }
 
-    public function addMiddleware($middleware) {
+    public function use($middleware) {
         $this -> pipeline -> addMiddleware($middleware);
         $this -> log -> debug('Registered middleware '.get_class($middleware));
 
