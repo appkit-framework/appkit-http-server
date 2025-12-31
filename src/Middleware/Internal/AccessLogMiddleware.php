@@ -2,9 +2,9 @@
 
 namespace AppKit\Http\Server\Middleware\Internal;
 
-use AppKit\Http\Middleware\HttpMiddlewareInterface;
+use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
 
-class AccessLogMiddleware implements HttpMiddlewareInterface {
+class AccessLogMiddleware implements HttpServerMiddlewareInterface {
     private $log;
 
     function __construct($log) {

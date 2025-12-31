@@ -2,11 +2,12 @@
 
 namespace AppKit\Http\Server\Middleware\Internal;
 
-use AppKit\Http\Middleware\HttpMiddlewareInterface;
+use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
+
 use AppKit\Http\Message\AbsoluteHttpRedirect;
 use AppKit\Http\Message\HttpResponse;
 
-class RedirectMiddleware implements HttpMiddlewareInterface {
+class RedirectMiddleware implements HttpServerMiddlewareInterface {
     public function processRequest($request, $next) {
         try {
             return $next($request);
