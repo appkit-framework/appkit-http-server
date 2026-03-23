@@ -22,14 +22,13 @@ class AccessLogMiddleware implements HttpServerMiddlewareInterface {
             $message .= ': ' . $respException -> getMessage();
 
         $status = $response -> getStatus();
-
         $this -> log -> log(
             $status >= 500 ? LogLevel::Warning : LogLevel::Debug,
             $message,
             [
                 'remoteAddr' => $request -> getRemoteAddr(),
                 'method' => $request -> getMethod(),
-                'url' => $request -> getUrl(),
+                'url' => $request -> getOriginalUrl(),
                 'status' => $status
             ]
         );
