@@ -107,7 +107,7 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
         ];
 
         if($this -> resource instanceof HealthIndicatorInterface)
-            $result['Resource ' . get_class($this -> resource)] = $this -> resource;
+            $data['Resource ' . get_class($this -> resource)] = $this -> resource;
 
         return new HealthCheckResult($data);
     }

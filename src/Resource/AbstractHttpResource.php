@@ -2,13 +2,14 @@
 
 namespace AppKit\Http\Server\Resource;
 
-use AppKit\Http\Middleware\HttpMiddlewarePipeline;
 use AppKit\Http\Server\Middleware\Internal\ErrorHandlerMiddleware;
 use AppKit\Http\Server\Middleware\Internal\ExceptionMiddleware;
 
-// TODO How to handle middlewares with health interface
+use AppKit\Health\HealthIndicatorInterface;
+use AppKit\Health\HealthCheckResult;
+use AppKit\Http\Middleware\HttpMiddlewarePipeline;
 
-abstract class AbstractHttpResource {
+abstract class AbstractHttpResource implements HealthIndicatorInterface {
     protected $log;
 
     protected $pipeline;
@@ -29,6 +30,16 @@ abstract class AbstractHttpResource {
             ) -> addMiddleware(
                 new ExceptionMiddleware($this -> log)
             );
+    }
+
+    public function checkHealth() {
+        $data = $this -> getAdditionalHealthData();
+
+        foreach($this -> pipeline -> getMiddlewares() as $middleware)
+            if($middleware instanceof HealthIndicatorInterface)
+                $data['Middlewares'][get_class($middleware)] = $middleware;
+
+        return new HealthCheckResult($data);
     }
 
     public function dispatchRequest($request) {
@@ -53,5 +64,9 @@ abstract class AbstractHttpResource {
         );
 
         return $this;
+    }
+
+    protected function getAdditionalHealthData() {
+        return [];
     }
 }

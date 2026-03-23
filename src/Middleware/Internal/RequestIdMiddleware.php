@@ -14,7 +14,7 @@ class RequestIdMiddleware implements HttpServerMiddlewareInterface {
     public function processRequest($request, $next) {
         $requestId = bin2hex(random_bytes(4));
         $request -> setAttribute('requestId', $requestId);
-        $this -> log -> setContext('httpReqId', $requestId);
+        $this -> log -> setContext('requestId', $requestId);
 
         return $next($request);
     }
