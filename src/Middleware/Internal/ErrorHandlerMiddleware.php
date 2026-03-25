@@ -2,11 +2,11 @@
 
 namespace AppKit\Http\Server\Middleware\Internal;
 
-use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
+use AppKit\Http\Server\Middleware\ServerHttpMiddlewareInterface;
 
 use AppKit\Http\Server\Message\ServerHttpError;
 
-class ErrorHandlerMiddleware implements HttpServerMiddlewareInterface {
+class ErrorHandlerMiddleware implements ServerHttpMiddlewareInterface {
     private $errorHandler;
 
     function __construct($errorHandler = null) {

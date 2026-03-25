@@ -2,9 +2,9 @@
 
 namespace AppKit\Http\Server\Middleware\Internal;
 
-use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
+use AppKit\Http\Server\Middleware\ServerHttpMiddlewareInterface;
 
-class ServerHeadersMiddleware implements HttpServerMiddlewareInterface {
+class ServerHeadersMiddleware implements ServerHttpMiddlewareInterface {
     public function processRequest($request, $next) {
         $response = $next($request);
 

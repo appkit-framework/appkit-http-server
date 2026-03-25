@@ -2,14 +2,14 @@
 
 namespace AppKit\Http\Server\Middleware\Internal;
 
-use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
+use AppKit\Http\Server\Middleware\ServerHttpMiddlewareInterface;
 
 use AppKit\Http\Server\Message\ServerHttpError;
 use AppKit\Http\Server\Message\ServerHttpRedirect;
 
 use Throwable;
 
-class ExceptionMiddleware implements HttpServerMiddlewareInterface {
+class ExceptionMiddleware implements ServerHttpMiddlewareInterface {
     private $log;
 
     function __construct($log) {
