@@ -5,9 +5,12 @@ namespace AppKit\Http\Server\Message;
 use AppKit\Http\Message\AbstractHttpResponse;
 
 class ServerHttpResponse extends AbstractHttpResponse {
-    public function setStatus($status) {
-        parent::setStatus($status);
-        return $this;
+    function __construct(
+        $status = 200,
+        $headers = [],
+        $body = ''
+    ) {
+        parent::__construct($status, $headers, $body);
     }
 
     public function setHeader($name, $value) {

@@ -17,16 +17,22 @@ class ServerHttpRequest extends AbstractHttpRequest {
         $remoteAddr
     ) {
         parent::__construct($method, $url, $headers, $body);
-        $this -> remoteAddr = $remoteAddr;
-        $this -> originalUrl = $url;
-        $this -> originalPath = $this -> getPath();
+
+        $this -> setRemoteAddr($remoteAddr);
+        $this -> storeOriginalUrl();
     }
+
+    // Remote address
 
     public function getRemoteAddr() {
         return $this -> remoteAddr;
     }
 
-    // Url
+    private function setRemoteAddr($remoteAddr) {
+        $this -> remoteAddr = $remoteAddr;
+    }
+
+    // URL
 
     public function getOriginalUrl() {
         return $this -> originalUrl;
@@ -36,7 +42,13 @@ class ServerHttpRequest extends AbstractHttpRequest {
         return $this -> originalPath;
     }
 
+    private function storeOriginalUrl() {
+        $this -> originalUrl = $this -> getUrl();
+        $this -> originalPath = $this -> getPath();
+    }
+
     public function rewritePath($path) {
         $this -> setPath($path);
+        return $this;
     }
 }

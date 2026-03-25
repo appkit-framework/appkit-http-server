@@ -4,8 +4,7 @@ namespace AppKit\Http\Server\Middleware\Internal;
 
 use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
 
-use AppKit\Http\Message\HttpError;
-use AppKit\Http\Message\AbstractHttpResponseException;
+use AppKit\Http\Server\Message\ServerHttpError;
 
 class ErrorHandlerMiddleware implements HttpServerMiddlewareInterface {
     private $errorHandler;
@@ -17,12 +16,11 @@ class ErrorHandlerMiddleware implements HttpServerMiddlewareInterface {
     public function processRequest($request, $next) {
         try {
             return $next($request);
-        } catch(HttpError $e) {
+        } catch(ServerHttpError $e) {
             if(!$this -> errorHandler)
                 throw $e;
 
-            $request -> setAttribute(AbstractHttpResponseException::class, $e);
-
+            $request -> setAttribute('responseException', $e);
             return $this -> errorHandler -> handleError($e, $request);
         }
     }

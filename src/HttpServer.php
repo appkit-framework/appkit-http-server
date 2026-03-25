@@ -2,7 +2,6 @@
 
 namespace AppKit\Http\Server;
 
-use AppKit\Http\Server\HttpServerException;
 use AppKit\Http\Server\Middleware\Internal\RequestIdMiddleware;
 use AppKit\Http\Server\Middleware\Internal\AccessLogMiddleware;
 use AppKit\Http\Server\Middleware\Internal\ServerHeadersMiddleware;

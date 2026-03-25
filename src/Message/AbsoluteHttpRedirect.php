@@ -2,6 +2,6 @@
 
 namespace AppKit\Http\Server\Message;
 
-use AppKit\Http\Message\HttpRedirect;
+use AppKit\Http\Server\Message\ServerHttpRedirect;
 
-class AbsoluteHttpRedirect extends HttpRedirect {}
+class AbsoluteHttpRedirect extends ServerHttpRedirect {}

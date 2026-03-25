@@ -4,8 +4,8 @@ namespace AppKit\Http\Server\Middleware\Internal;
 
 use AppKit\Http\Server\Middleware\HttpServerMiddlewareInterface;
 
-use AppKit\Http\Message\AbstractHttpResponseException;
-use AppKit\Http\Message\HttpError;
+use AppKit\Http\Server\Message\ServerHttpError;
+use AppKit\Http\Server\Message\ServerHttpRedirect;
 
 use Throwable;
 
@@ -19,15 +19,14 @@ class ExceptionMiddleware implements HttpServerMiddlewareInterface {
     public function processRequest($request, $next) {
         try {
             return $next($request);
-        } catch(AbstractHttpResponseException $e) {
+        } catch(ServerHttpError | ServerHttpRedirect $e) {
             throw $e;
         } catch(Throwable $e) {
             $this -> log -> error(
                 'Uncaught exception while handling request',
                 $e
             );
-
-            throw new HttpError(500);
+            throw new ServerHttpError(500);
         }
     }
 }
