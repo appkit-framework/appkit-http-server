@@ -20,11 +20,11 @@ class AccessLogMiddleware implements ServerHttpMiddlewareInterface {
         $responseException = $request -> getAttribute('responseException');
         $this -> log -> log(
             $status >= 500 ? LogLevel::Warning : LogLevel::Debug,
-            '{remoteAddr} {method} {url} => {status} {message}',
+            '{remoteAddr} {method} {target} => {status} {message}',
             [
                 'remoteAddr' => $request -> getRemoteAddr(),
                 'method' => $request -> getMethod(),
-                'url' => $request -> getOriginalUrl(),
+                'target' => $request -> getOriginalTarget(),
                 'status' => $status,
                 'message' => $responseException ?-> getMessage() ?? ''
             ],

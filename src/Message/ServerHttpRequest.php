@@ -6,20 +6,20 @@ use AppKit\Http\Message\AbstractHttpRequest;
 
 class ServerHttpRequest extends AbstractHttpRequest {
     private $remoteAddr;
-    private $originalUrl;
+    private $originalTarget;
     private $originalPath;
 
     function __construct(
         $method,
-        $url,
+        $target,
         $headers,
         $body,
         $remoteAddr
     ) {
-        parent::__construct($method, $url, $headers, $body);
+        parent::__construct($method, $target, $headers, $body);
 
         $this -> setRemoteAddr($remoteAddr);
-        $this -> storeOriginalUrl();
+        $this -> storeOriginalTarget();
     }
 
     // Remote address
@@ -32,18 +32,18 @@ class ServerHttpRequest extends AbstractHttpRequest {
         $this -> remoteAddr = $remoteAddr;
     }
 
-    // URL
+    // Target
 
-    public function getOriginalUrl() {
-        return $this -> originalUrl;
+    public function getOriginalTarget() {
+        return $this -> originalTarget;
     }
 
     public function getOriginalPath() {
         return $this -> originalPath;
     }
 
-    private function storeOriginalUrl() {
-        $this -> originalUrl = $this -> getUrl();
+    private function storeOriginalTarget() {
+        $this -> originalTarget = $this -> getTarget();
         $this -> originalPath = $this -> getPath();
     }
 
