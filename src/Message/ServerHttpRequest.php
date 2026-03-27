@@ -13,13 +13,17 @@ class ServerHttpRequest extends AbstractHttpRequest {
         $method,
         $target,
         $headers,
+        $bodyText,
         $body,
         $remoteAddr
     ) {
-        parent::__construct($method, $target, $headers, $body);
-
-        $this -> setRemoteAddr($remoteAddr);
-        $this -> storeOriginalTarget();
+        $this -> setMethod($method)
+            -> setTarget($target)
+            -> storeOriginalTarget()
+            -> setHeaders($headers)
+            -> setBodyText($bodyText)
+            -> setBody($body)
+            -> setRemoteAddr($remoteAddr);
     }
 
     // Remote address
@@ -30,6 +34,7 @@ class ServerHttpRequest extends AbstractHttpRequest {
 
     private function setRemoteAddr($remoteAddr) {
         $this -> remoteAddr = $remoteAddr;
+        return $this;
     }
 
     // Target
@@ -42,13 +47,19 @@ class ServerHttpRequest extends AbstractHttpRequest {
         return $this -> originalPath;
     }
 
+    public function rewritePath($path) {
+        return $this -> setPath($path);
+    }
+
     private function storeOriginalTarget() {
         $this -> originalTarget = $this -> getTarget();
         $this -> originalPath = $this -> getPath();
+        return $this;
     }
 
-    public function rewritePath($path) {
-        $this -> setPath($path);
-        return $this;
+    // Body
+
+    public function setParsedBody($body) {
+        return $this -> setBody($body);
     }
 }

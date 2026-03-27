@@ -3,6 +3,7 @@
 namespace AppKit\Http\Server;
 
 use AppKit\Http\Server\Middleware\Internal\RequestIdMiddleware;
+use AppKit\Http\Server\Middleware\Internal\RequestBodyParserMiddleware;
 use AppKit\Http\Server\Middleware\Internal\AccessLogMiddleware;
 use AppKit\Http\Server\Middleware\Internal\ServerHeadersMiddleware;
 use AppKit\Http\Server\Middleware\Internal\RedirectMiddleware;
@@ -48,6 +49,8 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
         $this -> pipeline
             -> addMiddleware(
                 new RequestIdMiddleware($this -> log)
+            ) -> addMiddleware(
+                new RequestBodyParserMiddleware()
             ) -> addMiddleware(
                 new AccessLogMiddleware($this -> log)
             ) -> addMiddleware(
@@ -117,6 +120,7 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
             $psrRequest -> getRequestTarget(),
             $psrRequest -> getHeaders(),
             $psrRequest -> getBody(),
+            $psrRequest -> getParsedBody(),
             $psrRequest -> getServerParams()['REMOTE_ADDR']
         );
 
@@ -125,7 +129,7 @@ class HttpServer implements StartStopInterface, HealthIndicatorInterface {
         return new Response(
             $response -> getStatus(),
             $response -> getHeaders(),
-            $response -> getBody()
+            $response -> getBodyText()
         );
     }
 }

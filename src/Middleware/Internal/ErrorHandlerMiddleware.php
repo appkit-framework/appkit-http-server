@@ -21,7 +21,8 @@ class ErrorHandlerMiddleware implements ServerHttpMiddlewareInterface {
                 throw $e;
 
             $request -> setAttribute('responseException', $e);
-            return $this -> errorHandler -> handleError($e, $request);
+            return $this -> errorHandler -> handleError($e, $request)
+                -> setStatus($e -> getResponse() -> getStatus());
         }
     }
 

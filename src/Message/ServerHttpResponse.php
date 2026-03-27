@@ -8,28 +8,36 @@ class ServerHttpResponse extends AbstractHttpResponse {
     function __construct(
         $status = 200,
         $headers = [],
-        $body = ''
+        $bodyText = ''
     ) {
-        parent::__construct($status, $headers, $body);
+        $this -> setStatus($status)
+            -> setHeaders($headers)
+            -> setBodyText($bodyText);
     }
 
+    // Status
+
+    public function setStatus($status) {
+        return parent::setStatus($status);
+    }
+
+    // Headers
+
     public function setHeader($name, $value) {
-        parent::setHeader($name, $value);
-        return $this;
+        return parent::setHeader($name, $value);
     }
 
     public function addHeader($name, $value) {
-        parent::addHeader($name, $value);
-        return $this;
+        return parent::addHeader($name, $value);
     }
 
     public function unsetHeader($name) {
-        parent::unsetHeader($name);
-        return $this;
+        return parent::unsetHeader($name);
     }
 
-    public function setBody($body) {
-        parent::setBody($body);
-        return $this;
+    // Body
+
+    public function setBodyText($bodyText) {
+        return parent::setBodyText($bodyText);
     }
 }
