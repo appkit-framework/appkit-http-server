@@ -4,7 +4,7 @@ namespace AppKit\Http\Server\ErrorHandler;
 
 use AppKit\Http\Server\Message\PlainTextHttpResponse;
 
-class PlainTextErrorHandler {
+class PlainTextErrorHandler implements HttpErrorHandlerInterface {
     public function handleError($error, $request) {
         return new PlainTextHttpResponse($error -> getMessage());
     }
