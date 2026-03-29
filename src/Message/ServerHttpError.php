@@ -6,7 +6,7 @@ use AppKit\Http\Message\AbstractHttpError;
 
 class ServerHttpError extends AbstractHttpError {
     function __construct(
-        $status = 500,
+        $status,
         $message = null,
         $headers = [],
         $previous = null
