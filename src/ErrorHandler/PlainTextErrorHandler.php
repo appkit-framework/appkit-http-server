@@ -6,6 +6,9 @@ use AppKit\Http\Server\Message\PlainTextHttpResponse;
 
 class PlainTextErrorHandler implements HttpErrorHandlerInterface {
     public function handleError($error, $request) {
-        return new PlainTextHttpResponse($error -> getMessage());
+        return new PlainTextHttpResponse(
+            $error -> getMessage(),
+            $error -> getResponse() -> getHeaders()
+        );
     }
 }
